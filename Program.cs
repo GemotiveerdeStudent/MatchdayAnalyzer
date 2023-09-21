@@ -1,5 +1,6 @@
-namespace MatchdayAnalyzer
-{
+namespace MatchdayAnalyzer;
+
+
     public class Program
     {
         public static void Main(string[] args)
@@ -33,4 +34,3 @@ namespace MatchdayAnalyzer
             app.Run();
         }
     }
-}
