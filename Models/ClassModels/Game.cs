@@ -13,7 +13,7 @@ namespace MatchdayAnalyzer.Models.ClassModels
         public int? HomeTeamScore { get; set; }
         [Required]
         public int? AwayTeamScore { get; set; }
-        public virtual Attendance? Attendance { get; set; }
+        public virtual ICollection<Attendance> Attendances { get; set; }
         public virtual ICollection<Team>? TeamsList { get; set; }
         public virtual ICollection<Goal>? GoalList { get; set; }
 
