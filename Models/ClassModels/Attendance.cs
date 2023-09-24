@@ -7,8 +7,7 @@ namespace MatchdayAnalyzer.Models.ClassModels
     {
         public int Id { get; set; }
         public virtual ICollection<Player>? Players { get; set; } = new List<Player>();
-        public virtual Game? Game { get; set; } 
-
+        public virtual ICollection<Game>? Games { get; set; }
     }
 }
 

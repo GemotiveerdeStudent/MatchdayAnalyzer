@@ -22,22 +22,6 @@ namespace MatchdayAnalyzer.Controllers
         {
             return View();
         }
-        public IActionResult Team()
-        {
-            return View();
-        }
-        public IActionResult Goals()
-        {
-            return View();
-        }
-        public IActionResult Results()
-        {
-            return View();
-        }
-        public IActionResult Attendance()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

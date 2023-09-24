@@ -1,3 +1,6 @@
+using MatchdayAnalyzer.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace MatchdayAnalyzer;
 
 
@@ -9,7 +12,10 @@ namespace MatchdayAnalyzer;
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
+            builder.Services.AddDbContext<MatchdayAnalyzerContext>(
+            DbContextOptions =>
+            DbContextOptions.UseSqlServer(
+                builder.Configuration.GetConnectionString("DefaultConnection")));
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

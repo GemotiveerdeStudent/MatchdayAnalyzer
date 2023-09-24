@@ -12,9 +12,11 @@ namespace MatchdayAnalyzer.Models.ClassModels
         [Required]
         [StringLength(50)]
         public string? Position { get; set; }
-        public int TotalGoals { get; set; }
+        public int? TotalGoals { get; set; }
         public virtual Team? Team { get; set; }
-        public virtual ICollection<Attendance>? Attendances { get; set; } = new List<Attendance>();
+        public int? TeamId { get; set; }
+        public virtual int? AttendanceId { get; set; } 
+        public virtual Attendance? Attendance { get; set;}
         public virtual ICollection<Goal>? Goals { get; set; }
     }
 }

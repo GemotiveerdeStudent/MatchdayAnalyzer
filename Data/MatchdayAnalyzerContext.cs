@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MatchdayAnalyzer.Data
 {
-    public class MatchAnalyzerContext : DbContext
+    public class MatchdayAnalyzerContext : DbContext
     {
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<Game> Games { get; set; }
@@ -14,9 +14,16 @@ namespace MatchdayAnalyzer.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string connection = @"Data Source=.;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-            optionsBuilder.UseSqlServer(connection);
+            base.OnConfiguring(optionsBuilder);
+  /*        string connection = @"Data Source=.;Initial Catalog=MatchdayAnalyzer;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            optionsBuilder.UseSqlServer(connection); */
         }
+
+        public MatchdayAnalyzerContext(DbContextOptions<MatchdayAnalyzerContext> contextOptions) : base(contextOptions)
+        {
+
+        }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

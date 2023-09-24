@@ -10,6 +10,7 @@ namespace MatchdayAnalyzer.Models.ClassModels
         [StringLength(50)]
         public string? Name { get; set; }
         public Season? Seasons { get; set; }
+        public int? SeasonId { get; set; }
         public virtual ICollection<Player>? Players { get; set; }
         public virtual ICollection<Game>? Games { get; set; }
     }

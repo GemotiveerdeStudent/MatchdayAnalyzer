@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MatchdayAnalyzer.Migrations
 {
-    [DbContext(typeof(MatchAnalyzerContext))]
-    partial class MatchAnalyzerContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(MatchdayAnalyzerContext))]
+    partial class MatchdayAnalyzerContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -21,36 +21,6 @@ namespace MatchdayAnalyzer.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("AttendancePlayer", b =>
-                {
-                    b.Property<int>("AttendancesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PlayersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AttendancesId", "PlayersId");
-
-                    b.HasIndex("PlayersId");
-
-                    b.ToTable("AttendancePlayer");
-                });
-
-            modelBuilder.Entity("GameGoal", b =>
-                {
-                    b.Property<int>("GamesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GoalListId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GamesId", "GoalListId");
-
-                    b.HasIndex("GoalListId");
-
-                    b.ToTable("GameGoal");
-                });
 
             modelBuilder.Entity("GameTeam", b =>
                 {
@@ -67,21 +37,6 @@ namespace MatchdayAnalyzer.Migrations
                     b.ToTable("GameTeam");
                 });
 
-            modelBuilder.Entity("GoalPlayer", b =>
-                {
-                    b.Property<int>("GoalsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PlayersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GoalsId", "PlayersId");
-
-                    b.HasIndex("PlayersId");
-
-                    b.ToTable("GoalPlayer");
-                });
-
             modelBuilder.Entity("MatchdayAnalyzer.Models.ClassModels.Attendance", b =>
                 {
                     b.Property<int>("Id")
@@ -90,12 +45,7 @@ namespace MatchdayAnalyzer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("GameId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("GameId");
 
                     b.ToTable("Attendances");
                 });
@@ -107,6 +57,9 @@ namespace MatchdayAnalyzer.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AttendanceId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("AwayTeamScore")
                         .IsRequired()
@@ -126,6 +79,8 @@ namespace MatchdayAnalyzer.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AttendanceId");
+
                     b.ToTable("Games");
                 });
 
@@ -137,16 +92,20 @@ namespace MatchdayAnalyzer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("GameId")
+                    b.Property<int?>("GameId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MatchGoals")
+                    b.Property<int?>("MatchGoals")
                         .HasColumnType("int");
 
-                    b.Property<int>("PlayerId")
+                    b.Property<int?>("PlayerId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("PlayerId");
 
                     b.ToTable("Goals");
                 });
@@ -158,6 +117,9 @@ namespace MatchdayAnalyzer.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AttendanceId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -172,10 +134,12 @@ namespace MatchdayAnalyzer.Migrations
                     b.Property<int?>("TeamId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TotalGoals")
+                    b.Property<int?>("TotalGoals")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AttendanceId");
 
                     b.HasIndex("TeamId");
 
@@ -216,44 +180,14 @@ namespace MatchdayAnalyzer.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("SeasonsId")
+                    b.Property<int?>("SeasonId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SeasonsId");
+                    b.HasIndex("SeasonId");
 
                     b.ToTable("Teams");
-                });
-
-            modelBuilder.Entity("AttendancePlayer", b =>
-                {
-                    b.HasOne("MatchdayAnalyzer.Models.ClassModels.Attendance", null)
-                        .WithMany()
-                        .HasForeignKey("AttendancesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MatchdayAnalyzer.Models.ClassModels.Player", null)
-                        .WithMany()
-                        .HasForeignKey("PlayersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("GameGoal", b =>
-                {
-                    b.HasOne("MatchdayAnalyzer.Models.ClassModels.Game", null)
-                        .WithMany()
-                        .HasForeignKey("GamesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MatchdayAnalyzer.Models.ClassModels.Goal", null)
-                        .WithMany()
-                        .HasForeignKey("GoalListId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("GameTeam", b =>
@@ -271,35 +205,41 @@ namespace MatchdayAnalyzer.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("GoalPlayer", b =>
+            modelBuilder.Entity("MatchdayAnalyzer.Models.ClassModels.Game", b =>
                 {
-                    b.HasOne("MatchdayAnalyzer.Models.ClassModels.Goal", null)
-                        .WithMany()
-                        .HasForeignKey("GoalsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("MatchdayAnalyzer.Models.ClassModels.Attendance", "Attendance")
+                        .WithMany("Games")
+                        .HasForeignKey("AttendanceId");
 
-                    b.HasOne("MatchdayAnalyzer.Models.ClassModels.Player", null)
-                        .WithMany()
-                        .HasForeignKey("PlayersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Attendance");
                 });
 
-            modelBuilder.Entity("MatchdayAnalyzer.Models.ClassModels.Attendance", b =>
+            modelBuilder.Entity("MatchdayAnalyzer.Models.ClassModels.Goal", b =>
                 {
                     b.HasOne("MatchdayAnalyzer.Models.ClassModels.Game", "Game")
-                        .WithMany("Attendances")
+                        .WithMany("GoalList")
                         .HasForeignKey("GameId");
 
+                    b.HasOne("MatchdayAnalyzer.Models.ClassModels.Player", "player")
+                        .WithMany("Goals")
+                        .HasForeignKey("PlayerId");
+
                     b.Navigation("Game");
+
+                    b.Navigation("player");
                 });
 
             modelBuilder.Entity("MatchdayAnalyzer.Models.ClassModels.Player", b =>
                 {
+                    b.HasOne("MatchdayAnalyzer.Models.ClassModels.Attendance", "Attendance")
+                        .WithMany("Players")
+                        .HasForeignKey("AttendanceId");
+
                     b.HasOne("MatchdayAnalyzer.Models.ClassModels.Team", "Team")
                         .WithMany("Players")
                         .HasForeignKey("TeamId");
+
+                    b.Navigation("Attendance");
 
                     b.Navigation("Team");
                 });
@@ -308,14 +248,26 @@ namespace MatchdayAnalyzer.Migrations
                 {
                     b.HasOne("MatchdayAnalyzer.Models.ClassModels.Season", "Seasons")
                         .WithMany("Teams")
-                        .HasForeignKey("SeasonsId");
+                        .HasForeignKey("SeasonId");
 
                     b.Navigation("Seasons");
                 });
 
+            modelBuilder.Entity("MatchdayAnalyzer.Models.ClassModels.Attendance", b =>
+                {
+                    b.Navigation("Games");
+
+                    b.Navigation("Players");
+                });
+
             modelBuilder.Entity("MatchdayAnalyzer.Models.ClassModels.Game", b =>
                 {
-                    b.Navigation("Attendances");
+                    b.Navigation("GoalList");
+                });
+
+            modelBuilder.Entity("MatchdayAnalyzer.Models.ClassModels.Player", b =>
+                {
+                    b.Navigation("Goals");
                 });
 
             modelBuilder.Entity("MatchdayAnalyzer.Models.ClassModels.Season", b =>
