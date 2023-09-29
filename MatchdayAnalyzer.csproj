@@ -24,4 +24,8 @@
     <Folder Include="Areas\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\css\gunMetalGrayThema.css" />
+  </ItemGroup>
+
 </Project>

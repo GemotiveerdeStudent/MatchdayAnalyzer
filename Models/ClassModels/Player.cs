@@ -2,7 +2,7 @@
 
 namespace MatchdayAnalyzer.Models.ClassModels
 {
-    public class Player
+    public partial class Player
 
     {
         public int Id { get; set; }
@@ -12,7 +12,6 @@ namespace MatchdayAnalyzer.Models.ClassModels
         [Required]
         [StringLength(50)]
         public string? Position { get; set; }
-        public int? TotalGoals { get; set; }
         public virtual Team? Team { get; set; }
         public int? TeamId { get; set; }
         public virtual int? AttendanceId { get; set; } 
